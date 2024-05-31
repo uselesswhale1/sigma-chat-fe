@@ -4,6 +4,19 @@ export type User = {
   surname?: string;
   photoUrl: string;
   bio: string;
+  chats: number[]
+}
+
+
+export type Chat = {
+  id: number;
+  name: string;
+  photoUrl: string;
+  participants: User['id'][];
+  messages: Message[];
+  createdAt: string;
+  currentEvent?: string;
+  deletedAt?: string;
 }
 
 export type Message = {
@@ -11,5 +24,5 @@ export type Message = {
   authorId: User['id'];
   content: string;
   createdAt: string;
-  modifiedAt: string;
+  modifiedAt?: string;
 }
