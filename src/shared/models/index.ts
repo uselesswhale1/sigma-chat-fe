@@ -1,28 +1,54 @@
-export type User = {
-  id: number;
+type Entity = {
+  id: string;
   name: string;
-  surname?: string;
-  photoUrl: string;
-  bio: string;
-  chats: number[]
-}
+  photoUrl?: string;
+};
 
-
-export type Chat = {
-  id: number;
-  name: string;
-  photoUrl: string;
-  participants: User['id'][];
-  messages: Message[];
+type Logs = {
   createdAt: string;
-  currentEvent?: string;
+  updatedAt?: string;
   deletedAt?: string;
-}
+};
 
-export type Message = {
-  id: number;
-  authorId: User['id'];
+export type User = Entity &
+  Logs & {
+    firstName: string;
+    lastName?: string;
+    lastActive?: string;
+    email: string;
+    bio?: string;
+    chats: Chat["id"][];
+  };
+
+export type Chat = Entity &
+  Logs & {
+    lastMessage: string;
+    creator: Entity;
+  };
+
+export type ChatInvite = {
+  id: string;
+  name: string;
+};
+
+export type Message = Logs & {
   content: string;
-  createdAt: string;
-  modifiedAt?: string;
-}
+  creator: User;
+  chatId: string;
+};
+
+export type CreateChatForm = Omit<CreateChatDto, "creator" | "lastMessage">;
+
+export type CreateChatDto = {
+  name: string;
+  photoUrl?: string;
+  lastMessage?: string;
+  creator: { id: User["id"]; name: User["name"] };
+  invited: string[];
+};
+
+export type CreateMessageDto = {
+  content: string;
+  creator: User["id"];
+  chatId: Chat["id"];
+};
