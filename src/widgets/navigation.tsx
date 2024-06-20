@@ -1,85 +1,102 @@
-import { Avatar, Box, Flex, Heading, IconButton, Link, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { chatsMock } from "../shared/mocks";
-import { AddIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { useState } from "react";
+import { Box, Heading, Link } from "@chakra-ui/react";
+import { Chat, ChatInvite, CreateChatForm } from "../shared/models";
+import { NavigationCard } from "../shared/ui";
+import { CreateChatModal } from "../shared/ui/create-chat-modal";
+import { useAtom } from "jotai";
+import { chatAtom } from "../shared/store";
+import { NavigationInvite } from "../shared/ui/navigation-invite";
 
 interface NavigationProps {
-  chats: number[]
+  chats: Chat[];
+  typingMsg: string;
+  invites: ChatInvite[];
+  onChatChange: (chatId: string) => void;
+  onChatCreate: (newChat: CreateChatForm) => void;
+  onChatDelete: (id: Chat["id"]) => void;
+  onInviteConfirm: (id: Chat["id"]) => void;
+  onInviteDecline: (id: Chat["id"]) => void;
 }
-export const Navigation = ({ chats: chatIds }: NavigationProps): JSX.Element => {
 
-  const chats = chatsMock.filter(({ id }) => chatIds.includes(id))
+export const Navigation = ({
+  chats,
+  // typingMsg,
+  invites,
+  onChatChange,
+  onChatCreate,
+  onChatDelete,
+  onInviteConfirm,
+  onInviteDecline,
+}: NavigationProps): JSX.Element => {
+  const [, setChat] = useAtom(chatAtom);
 
-  const onCreateChat = (): void => {
-    //TODO handle chat creation
-    console.log('TODO handle chat creation');
+  const [selected, setSelected] = useState<string>();
+
+  const [isCreateOpen, setIsCreateOpen] = useState<boolean>(false);
+
+  const handleChatModalClose = (): void => {
+    setIsCreateOpen(false);
+  };
+  const handleChatModalOpen = (): void => {
+    setIsCreateOpen(true);
   };
 
-  const handleMenuClick = (): void => {
-    //TODO handle chat creation
-    console.log('TODO handle chat creation');
-
+  const handleChatCreate = (chat: CreateChatForm): void => {
+    onChatCreate(chat);
+    handleChatModalClose();
   };
 
-  return (<>
-    {!chats.length &&
-      <p>Chats will appear here,&nbsp;
-        <Link color='teal.500' href='#' onClick={onCreateChat}>
-          write somebody
-        </Link>
-      </p>
-    }
-    {chats.map((chat) => {
+  const handleChatDelete = (chatId: Chat["id"]): void => {
+    onChatDelete(chatId);
+    handleChatModalClose();
+  };
 
-      return (
+  const handleCardSelect = (newId: string): void => {
+    if (selected === newId) return;
 
-        <Flex bg='#91Ba8D' p={4} m={1}>
-          <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-            <Avatar name={chat.name} src={chat.photoUrl} />
+    setSelected(newId);
+    onChatChange(newId);
+  };
 
-            <Box>
-              <Heading size='sm'>{chat.name}</Heading>
-              <Box
-                w={200}
-                whiteSpace='nowrap'
-                overflow='hidden'
-                textOverflow='ellipsis'
-              >
-                {chat.messages[chat.messages.length - 1].content}
-              </Box>
-            </Box>
-          </Flex>
-          {/* <IconButton
-                      variant='ghost'
-                      colorScheme='gray'
-                      aria-label='See menu'
-                      icon={<DragHandleIcon />}
-                      onClick={() => handleMenuClick()}
-                    /> */}
-          <Menu>
-            <MenuButton
-              as={IconButton}
-              aria-label='Options'
-              icon={<HamburgerIcon />}
-              variant='ghost'
-            />
-            <MenuList>
-              <MenuItem icon={<AddIcon />} command='⌘T'>
-                New Tab
-              </MenuItem>
-              {/* <MenuItem icon={<ExternalLinkIcon />} command='⌘N'>
-                          New Window
-                        </MenuItem>
-                        <MenuItem icon={<RepeatIcon />} command='⌘⇧N'>
-                          Open Closed Tab
-                        </MenuItem>
-                        <MenuItem icon={<EditIcon />} command='⌘O'>
-                          Open File...
-                        </MenuItem> */}
-            </MenuList>
-          </Menu>
-        </Flex>
-      )
-    })}
-  </>
-  )
+  const createChatMessage = (
+    <Heading size="xs" m="30%">
+      <Link color="teal.500" href="" onClick={handleChatModalOpen}>
+        Create new chat
+      </Link>
+    </Heading>
+  );
+
+  return (
+    <Box h={620} w={370} overflowY="scroll">
+      {chats.map((chat) => {
+        return (
+          <NavigationCard
+            {...chat}
+            // typingMsg={typingMsg} // TODO handle isTyping
+            isSelected={selected === chat.id}
+            onSelect={(newId) => {
+              handleCardSelect(newId);
+              setChat(chat);
+            }}
+            onDelete={handleChatDelete}
+          />
+        );
+      })}
+
+      {invites.map((invite) => (
+        <NavigationInvite
+          name={invite.name}
+          onConfirm={(): void => onInviteConfirm(invite.id)}
+          onDelete={(): void => onInviteDecline(invite.id)}
+        />
+      ))}
+      {createChatMessage}
+
+      <CreateChatModal
+        onCancel={handleChatModalClose}
+        onCreate={handleChatCreate}
+        open={isCreateOpen}
+      />
+    </Box>
+  );
 };
