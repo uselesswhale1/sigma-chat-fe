@@ -1,52 +1,64 @@
-import { Avatar, Box, Flex, Heading, IconButton, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
-import { AddIcon, EditIcon, ExternalLinkIcon, HamburgerIcon, RepeatIcon } from "@chakra-ui/icons";
-import { User } from "../shared/models";
+import {
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useDisclosure,
+} from "@chakra-ui/react";
+import {
+  ExternalLinkIcon,
+  InfoOutlineIcon,
+  // RepeatIcon,
+  // SettingsIcon,
+} from "@chakra-ui/icons";
+import { ProfileCard } from "../shared/ui/profile-card";
 
 interface HeaderProps {
-  user: User;
+  onUserReset: () => void;
 }
 
-export const Header = ({ user }: HeaderProps): JSX.Element => {
+export const Header = ({ onUserReset }: HeaderProps): JSX.Element => {
+  const profileModalProps = useDisclosure();
 
-  return (<>
-    <Flex p={2}>
-      <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap' justifyContent='flex-end'>
-        <Avatar name={user.name} src={user.photoUrl} />
+  const menuOptions = [
+    {
+      children: "Profile",
+      onClick: () => {
+        profileModalProps.onOpen();
+      },
+      icon: <InfoOutlineIcon />,
+      // command: "⌘N",
+    },
+    {
+      children: "Reset user",
+      onClick: onUserReset,
+      icon: <ExternalLinkIcon />,
+      // command: "⌘N",
+      isDisabled: false,
+    },
+  ];
 
-        <Box>
-          <Heading size='sm'>{user.name}</Heading>
-          <Box
-            w={200}
-            whiteSpace='nowrap'
-            overflow='hidden'
-            textOverflow='ellipsis'
-          >
-            {user.bio}
-          </Box>
-        </Box>
+  return (
+    <>
+      <Flex p={2}>
+        <Flex
+          flex="1"
+          gap="4"
+          alignItems="center"
+          flexWrap="wrap"
+          justifyContent="flex-end"
+        >
+          <Menu>
+            <MenuButton aria-label="Options" children={<ProfileCard />} />
+            <MenuList>
+              {menuOptions.map((item) => (
+                <MenuItem {...item} />
+              ))}
+            </MenuList>
+          </Menu>
+        </Flex>
       </Flex>
-      <Menu>
-        <MenuButton
-          as={IconButton}
-          aria-label='Options'
-          icon={<HamburgerIcon />}
-          variant='ghost'
-        />
-        <MenuList>
-          <MenuItem icon={<AddIcon />} command='⌘T'>
-            New Tab
-          </MenuItem>
-          <MenuItem icon={<ExternalLinkIcon />} command='⌘N'>
-            New Window
-          </MenuItem>
-          <MenuItem icon={<RepeatIcon />} command='⌘⇧N'>
-            Open Closed Tab
-          </MenuItem>
-          <MenuItem icon={<EditIcon />} command='⌘O'>
-            Open File...
-          </MenuItem>
-        </MenuList>
-      </Menu>
-    </Flex>
-  </>)
+    </>
+  );
 };

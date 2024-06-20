@@ -1,5 +1,4 @@
 import { io } from "socket.io-client";
-import { ENDPOINT } from "../shared/constants";
+import { WEBSOCKET_ENDPOINT } from "../shared/constants";
 
-export const socket = io(ENDPOINT, { autoConnect: false });
-
+export const socket = io(WEBSOCKET_ENDPOINT, { autoConnect: false });
