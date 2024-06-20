@@ -7,14 +7,14 @@ import { ChatInput, ChatHeader, ChatMessages } from "../shared/ui";
 interface MainProps {
   onMessage: (msg: string) => void;
   messages: Message[];
-  typingMsg: string;
+  // typingMsg: string;
 }
 
 export const Main = ({
   onMessage,
   messages,
-  typingMsg,
-}: MainProps): JSX.Element => {
+}: // typingMsg,
+MainProps): JSX.Element => {
   const [chat] = useAtom(chatAtom);
 
   if (!chat) {
@@ -27,7 +27,7 @@ export const Main = ({
 
   return (
     <Box>
-      <ChatHeader chat={chat} typingMsg={typingMsg} />
+      <ChatHeader chat={chat} /* typingMsg={typingMsg} */ />
 
       <ChatMessages messages={messages} />
 

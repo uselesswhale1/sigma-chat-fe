@@ -1,121 +1,184 @@
-import { Box, Button, FormControl, FormErrorMessage, FormHelperText, FormLabel, Grid, GridItem, Input, InputGroup, InputLeftAddon, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, UseDisclosureProps, useDisclosure } from "@chakra-ui/react";
-import { Navigation } from "./widgets/navigation";
-import { Header } from "./widgets/header";
-import { useAtom } from "jotai";
-import { userAtom } from "./shared/store";
 import { useEffect, useState } from "react";
-import { chatsMock, usersMock } from "./shared/mocks";
-import React from "react";
-import { Main } from "./widgets/main";
-
-interface UserForm {
-  name: string,
-  lastname: string | null,
-  email: string,
-  phone: string
-}
+import { useNavigate } from "react-router-dom";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { useAtom } from "jotai";
+import { Navigation, Header, Main } from "./widgets";
+import { Chat, ChatInvite, CreateChatForm, Message } from "./shared/models";
+import { EVENTS } from "./shared/types";
+import { userAtom } from "./shared/store";
+import { PALLETE } from "./shared/constants";
+import { useSocketConnection } from "./shared/hooks/use-ws-connection";
 
 const App = (): JSX.Element => {
   const [user, setUser] = useAtom(userAtom);
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  // const [overlay, setOverlay] = React.useState(<OverlayOne />)
-  const [form, setForm] = useState<UserForm>({
-    name: '',
-    lastname: null,
-    email: '',
-    phone: ''
-  })
+
+  const [activeChatId, setActiveChatId] = useState<Chat["id"] | null>(null);
+
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [chats, setChats] = useState<Chat[]>([]);
+  const [invites, setInvites] = useState<ChatInvite[]>([]);
+
+  // const typingMsg = useRef<string>("");
+
+  const navigate = useNavigate();
+
+  const { getChatMessages, createMessage, createChat, deleteChat, join } =
+    useSocketConnection({
+      onMessages: (data: Message[]) => {
+        console.log("on-messages", data);
+        setMessages(data);
+      },
+      onMessage: (msg: Message) => {
+        if (activeChatId !== msg.chatId) return;
+
+        console.log("on-message", msg);
+        setMessages((messages) => [...messages, msg]);
+      },
+      onChats: (data: Chat[]) => {
+        console.log("user-receive", EVENTS.CHATS, data);
+        setChats(data);
+      },
+      onChat: (data: Chat) => {
+        console.log("user-receive", EVENTS.CHAT, data);
+        setChats((prev) => {
+          const newChats = prev.map((c) => {
+            if (c.id === data.id) {
+              return data;
+            }
+            return c;
+          });
+
+          return newChats;
+        });
+      },
+      onChatInvite: (data: ChatInvite[]) => {
+        // const inviteArr = JSON.parse(inviteStr);
+        console.log("handle invite-chat", data);
+        setInvites(data);
+        // TODO open popup and confirm invitation
+        // emit socket confirmation/deny
+      },
+      // onChatTyping: (data: string) => {
+      //   const { name, isTyping } = JSON.parse(data);
+
+      //   console.log("handle typing", name, isTyping);
+
+      //   typingMsg.current = isTyping ? `${name} is typing...` : "";
+      // },
+      user,
+    });
+
+  const handleUserReset = (): void => {
+    setUser(null);
+    navigate("/signup");
+  };
+
+  const handleChatChange = (id: Chat["id"]): void => {
+    setMessages([]);
+    setActiveChatId(id);
+
+    getChatMessages(id);
+  };
+
+  const handleChatCreate = (values: CreateChatForm): void => {
+    if (user && user.id) {
+      createChat({
+        ...values,
+        creator: { id: user?.id, name: user.name },
+        lastMessage: "",
+      });
+    }
+  };
+  const handleChatDelete = (id: Chat["id"]): void => {
+    if (user && user.id) {
+      deleteChat({
+        id,
+        userId: user?.id,
+      });
+    }
+  };
+
+  const handleInviteConfirm = (id: Chat["id"]): void => {
+    if (user && user.id) {
+      join({
+        id,
+        userId: user?.id,
+      });
+    }
+  };
+  const handleInviteDecline = (id: Chat["id"]): void => {
+    if (user && user.id) {
+      console.log("todo delete invitation", id);
+    }
+  };
 
   useEffect(() => {
-    setUser(usersMock[2]);
-    // if (user.id === 999) {
-    //   onOpen()
-    // }
-  }, []);
+    const currentUser = JSON.parse(sessionStorage.getItem("user") ?? "{}");
 
-  // const handleInputChange = (event: React.FormEvent<HTMLInputElement>): void => {
-  //   console.log(event);
+    if (!(currentUser && currentUser.id)) {
+      navigate("/signup");
+      return;
+    }
 
-  //   setForm((prev) => ({ ...prev, name: event.target.value }))
-  // }
+    if (currentUser.id) {
+      setUser(currentUser);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const sendMessage = (msg: string) => {
+    if (activeChatId && user && user?.id) {
+      const message = {
+        chatId: activeChatId,
+        content: msg,
+        creator: user.id,
+      };
+      createMessage(message);
+    }
+  };
+
+  if (!(user && user.id)) {
+    return <></>;
+  }
 
   return (
-    <div className="App">
-      <Modal isCentered isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay
-          bg='blackAlpha.300'
-          backdropFilter='blur(10px) hue-rotate(90deg)'
-        />
-        <ModalContent>
-          <ModalHeader>Sign in</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            {/* isInvalid={isNameInvalid} */}
-            <FormControl isRequired >
-              <FormLabel>First name</FormLabel>
-              <Input placeholder='John' />
-              {/* {isNameInvalid && (
-                <FormHelperText>
-                  Invalid input value
-                </FormHelperText>
-              )} */}
-            </FormControl>
-            <FormControl>
-              <FormLabel>Last name</FormLabel>
-              <Input placeholder='Doe' />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Email</FormLabel>
-              <Input placeholder='john.doe@gmail.com' />
-              {/* {!isEmailInvalid ? (
-                <FormHelperText>
-                  Enter the email you'd like to receive the newsletter on.
-                </FormHelperText>
-              ) : (
-                <FormErrorMessage>Email is required.</FormErrorMessage>
-              )} */}
-            </FormControl>
-            <FormControl>
-              <FormLabel>Phone</FormLabel>
-              <InputGroup>
-                <InputLeftAddon>+234</InputLeftAddon>
-                <Input type='tel' placeholder='phone number' />
-              </InputGroup>
-            </FormControl>
-          </ModalBody>
-          <ModalFooter>
-            <Button onClick={onClose}>Close</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+    <Box className="App" bg={PALLETE.a} h={"100vh"}>
       <Grid
         templateAreas={`
           "header header"
           "nav main"
-        
           `}
-        gridTemplateRows={'60px 1fr '}
-        gridTemplateColumns={'360px 1fr'}
-        // h='200px'
-        // gap='1'
-        color='blackAlpha.700'
-        fontWeight='bold'
+        gridTemplateRows={"60px 1fr "}
+        gridTemplateColumns={"360px 1fr"}
+        gap="2"
+        color="blackAlpha.700"
+        fontWeight="bold"
       >
-        <GridItem pl='2' bg='orange.300' area={'header'}>
-          <Header user={user} />
+        <GridItem pl="2" bg={PALLETE.a} area={"header"}>
+          <Header onUserReset={handleUserReset} />
         </GridItem>
-        <GridItem bg='#14452F' area={'nav'}>
-          <Navigation chats={user.chats || []} />
+        <GridItem bg={PALLETE.bg} area={"nav"}>
+          <Navigation
+            chats={chats}
+            invites={invites}
+            // typingMsg={typingMsg.current}
+            onChatChange={handleChatChange}
+            onChatCreate={handleChatCreate}
+            onChatDelete={handleChatDelete}
+            onInviteConfirm={handleInviteConfirm}
+            onInviteDecline={handleInviteDecline}
+          />
         </GridItem>
-        <GridItem pl='2' bg='#0A5C36' area={'main'}>
-          {/* chat={user.chats[0]} */}
-          <Main chat={chatsMock[0]} activeUserId={user.id} />
+        <GridItem pl="2" bg={PALLETE.bg} area={"main"}>
+          <Main
+            // user={user}
+            onMessage={sendMessage}
+            messages={messages}
+            // typingMsg={typingMsg.current}
+            // activeUserId={user.id} chatId={activeChatId}
+          />
         </GridItem>
-        {/* <GridItem pl='2' bg='blue.300' area={'footer'}>
-          Footer
-        </GridItem> */}
       </Grid>
-    </div>
+    </Box>
   );
 };
 

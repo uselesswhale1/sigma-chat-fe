@@ -9,7 +9,7 @@ import { NavigationInvite } from "../shared/ui/navigation-invite";
 
 interface NavigationProps {
   chats: Chat[];
-  typingMsg: string;
+  // typingMsg: string;
   invites: ChatInvite[];
   onChatChange: (chatId: string) => void;
   onChatCreate: (newChat: CreateChatForm) => void;
