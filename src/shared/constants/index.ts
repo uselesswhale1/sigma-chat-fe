@@ -1,2 +1,2 @@
-export * from './api';
-export * from './color-pallete';
+export * from "./api";
+export * from "./color-pallete";

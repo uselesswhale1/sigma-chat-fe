@@ -3,3 +3,6 @@ import { Chat, User } from "./models";
 
 export const userAtom = atom<User | null>(null);
 export const chatAtom = atom<Chat | null>(null);
+
+// users to invite when create chat
+export const usersAtom = atom<User[]>([]);

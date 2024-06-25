@@ -6,9 +6,15 @@ const USERS_ENDPOINT = ENDPOINT + "/users";
 
 class UsersService {
   async getUsers(): Promise<User[]> {
-    const { data } = await axios.get(USERS_ENDPOINT);
+    try {
+      const { data } = await axios.get(USERS_ENDPOINT);
 
-    return data;
+      return data;
+    } catch (error) {
+      console.log("catch", error);
+
+      throw error;
+    }
   }
 }
 

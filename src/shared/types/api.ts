@@ -6,3 +6,8 @@ export type UpdateUserDto = {
   firstName?: string;
   lastName?: string;
 };
+
+export enum ROUTES {
+  SIGN_UP = "/signup",
+  SIGN_IN = "/signin",
+}

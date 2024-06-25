@@ -37,13 +37,12 @@ export type Message = Logs & {
   chatId: string;
 };
 
-export type CreateChatForm = Omit<CreateChatDto, "creator" | "lastMessage">;
-
+export type CreateChatForm = Omit<CreateChatDto, "lastMessage">;
 export type CreateChatDto = {
   name: string;
   photoUrl?: string;
   lastMessage?: string;
-  creator: { id: User["id"]; name: User["name"] };
+  creator: string;
   invited: string[];
 };
 

@@ -85,7 +85,7 @@ export const NavigationCard = ({
               icon: <EditIcon />,
             },
           ].map((item) => (
-            <MenuItem {...item} />
+            <MenuItem {...item} key={item.children} />
           ))}
         </MenuList>
       </Menu>

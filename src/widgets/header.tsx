@@ -53,7 +53,7 @@ export const Header = ({ onUserReset }: HeaderProps): JSX.Element => {
             <MenuButton aria-label="Options" children={<ProfileCard />} />
             <MenuList>
               {menuOptions.map((item) => (
-                <MenuItem {...item} />
+                <MenuItem {...item} key={item.children} />
               ))}
             </MenuList>
           </Menu>

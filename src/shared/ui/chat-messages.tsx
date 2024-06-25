@@ -22,7 +22,13 @@ export const ChatMessages = ({ messages }: ChatMessagesProps): JSX.Element => {
       {messages.map((msg) => {
         const isActiveUser = user?.id === msg.creator.id;
 
-        return <ChatMessage isOwnMessage={isActiveUser} message={msg} />;
+        return (
+          <ChatMessage
+            isOwnMessage={isActiveUser}
+            message={msg}
+            key={msg.createdAt}
+          />
+        );
       })}
 
       <div ref={messageEndRef} />

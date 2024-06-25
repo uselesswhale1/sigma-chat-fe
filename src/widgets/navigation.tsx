@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Heading, Link } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import { Chat, ChatInvite, CreateChatForm } from "../shared/models";
 import { NavigationCard } from "../shared/ui";
 import { CreateChatModal } from "../shared/ui/create-chat-modal";
@@ -28,7 +28,7 @@ export const Navigation = ({
   onInviteConfirm,
   onInviteDecline,
 }: NavigationProps): JSX.Element => {
-  const [, setChat] = useAtom(chatAtom);
+  const [activeChat, setChat] = useAtom(chatAtom);
 
   const [selected, setSelected] = useState<string>();
 
@@ -47,8 +47,10 @@ export const Navigation = ({
   };
 
   const handleChatDelete = (chatId: Chat["id"]): void => {
+    if (chatId === activeChat?.id) {
+      setChat(null);
+    }
     onChatDelete(chatId);
-    handleChatModalClose();
   };
 
   const handleCardSelect = (newId: string): void => {
@@ -59,10 +61,8 @@ export const Navigation = ({
   };
 
   const createChatMessage = (
-    <Heading size="xs" m="30%">
-      <Link color="teal.500" href="" onClick={handleChatModalOpen}>
-        Create new chat
-      </Link>
+    <Heading size="xs" m="30%" color="teal.500" onClick={handleChatModalOpen}>
+      Create new chat
     </Heading>
   );
 
@@ -71,6 +71,7 @@ export const Navigation = ({
       {chats.map((chat) => {
         return (
           <NavigationCard
+            key={chat.id}
             {...chat}
             // typingMsg={typingMsg} // TODO handle isTyping
             isSelected={selected === chat.id}
@@ -85,6 +86,7 @@ export const Navigation = ({
 
       {invites.map((invite) => (
         <NavigationInvite
+          key={invite.id}
           name={invite.name}
           onConfirm={(): void => onInviteConfirm(invite.id)}
           onDelete={(): void => onInviteDecline(invite.id)}
@@ -92,11 +94,13 @@ export const Navigation = ({
       ))}
       {createChatMessage}
 
-      <CreateChatModal
-        onCancel={handleChatModalClose}
-        onCreate={handleChatCreate}
-        open={isCreateOpen}
-      />
+      {isCreateOpen && (
+        <CreateChatModal
+          onCancel={handleChatModalClose}
+          onCreate={handleChatCreate}
+          open={isCreateOpen}
+        />
+      )}
     </Box>
   );
 };
