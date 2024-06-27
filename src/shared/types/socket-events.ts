@@ -1,14 +1,20 @@
 export const enum EVENTS {
   MESSAGES = "messages",
   MESSAGE = "message",
-  ADD_MESSAGE = "createMessage",
+  MESSAGE_ADD = "createMessage",
 
   CHAT = "chat",
   CHATS = "chats",
   ADD_CHAT = "createChat",
   DEL_CHAT = "removeChat",
-  INV_CHAT = "inviteChat",
+  INVITES = "inviteChat",
   JOIN_CHAT = "joinChat",
 
   TYPING = "typing",
+
+  // DELETE_MESSAGE = 'deleteMessage',
+
+  // CHAT_REMOVE = 'deleteChat',
+  // CHAT_ADD_USER = 'addUserToChat',
+  // CHAT_REMOVE_USER = 'removeUserFromChat',
 }

@@ -61,9 +61,19 @@ export const Navigation = ({
   };
 
   const createChatMessage = (
-    <Heading size="xs" m="30%" color="teal.500" onClick={handleChatModalOpen}>
-      Create new chat
-    </Heading>
+    <Box
+      border={"1px solid white"}
+      cursor="pointer"
+      onClick={handleChatModalOpen}
+      my={"30%"}
+      px="30%"
+      py={5}
+      borderRadius="10px"
+    >
+      <Heading size="xs" color="teal.500">
+        Create new chat
+      </Heading>
+    </Box>
   );
 
   return (

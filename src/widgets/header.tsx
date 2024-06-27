@@ -6,12 +6,7 @@ import {
   MenuList,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  ExternalLinkIcon,
-  InfoOutlineIcon,
-  // RepeatIcon,
-  // SettingsIcon,
-} from "@chakra-ui/icons";
+import { ExternalLinkIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 import { ProfileCard } from "../shared/ui/profile-card";
 
 interface HeaderProps {
@@ -28,13 +23,12 @@ export const Header = ({ onUserReset }: HeaderProps): JSX.Element => {
         profileModalProps.onOpen();
       },
       icon: <InfoOutlineIcon />,
-      // command: "⌘N",
+      isDisabled: true,
     },
     {
-      children: "Reset user",
+      children: "Log out",
       onClick: onUserReset,
       icon: <ExternalLinkIcon />,
-      // command: "⌘N",
       isDisabled: false,
     },
   ];

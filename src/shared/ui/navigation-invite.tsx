@@ -8,6 +8,7 @@ interface NavigationInviteProps {
   onConfirm: () => void;
 }
 
+// TODO fix decline invitation
 export const NavigationInvite = ({
   name,
   onConfirm,
@@ -33,6 +34,7 @@ export const NavigationInvite = ({
     <IconButton
       aria-label="Decline invitation"
       icon={<CloseIcon />}
+      isDisabled={true}
       onClick={onDelete}
       variant="ghost"
       bg="tomato"

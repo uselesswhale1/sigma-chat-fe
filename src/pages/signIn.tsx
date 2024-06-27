@@ -3,7 +3,6 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  InputLeftAddon,
   Button,
   AlertDialog,
   AlertDialogBody,
@@ -13,44 +12,53 @@ import {
   AlertDialogOverlay,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { authService } from "../api/auth.service";
+import { useNavigate } from "react-router-dom";
+import { useAtom } from "jotai";
+import { userAtom } from "../shared";
+import { useNotifications } from "../shared/hooks";
 
-export const SignIn = () => {
-  const { register, handleSubmit, trigger, formState, getFieldState } = useForm(
-    {
-      defaultValues: {
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-      },
-    }
-  );
+export const SignIn = (): JSX.Element => {
+  const [, setUser] = useAtom(userAtom);
+  const { register, handleSubmit, formState } = useForm({
+    defaultValues: {
+      email: "",
+      pass: "",
+    },
+  });
 
   const { errors, isValid, disabled } = formState;
 
-  // useEffect(() => {
-  //   if (formState.errors.firstName) {
-  //     // do the your logic here
-  //   }
-  // }, [formState]); // ✅
-
-  const cancelRef = React.useRef(null);
+  const cancelRef = useRef(null);
+  const navigate = useNavigate();
+  const notify = useNotifications();
 
   const isLoading = false;
 
-  const onSubmit = (data: any) => {
-    console.log(data, errors);
+  const onSubmit = async (data: any) => {
+    try {
+      const res: any = await authService.login({
+        email: data.email,
+        password: data.pass,
+      });
+
+      const { access_token, ...rest } = res.data;
+
+      if (access_token) {
+        sessionStorage.setItem("token", access_token);
+
+        setUser(rest);
+
+        navigate("/");
+        return;
+      }
+    } catch (error: any) {
+      notify.error("Failed to find user");
+    }
   };
 
-  console.log(formState);
-
-  const commonInputProps = {
-    onChange: () => {
-      trigger();
-    },
-  };
   return (
     <>
       <AlertDialog
@@ -66,33 +74,6 @@ export const SignIn = () => {
               </AlertDialogHeader>
 
               <AlertDialogBody>
-                <FormControl
-                  isRequired
-                  isInvalid={getFieldState("firstName").invalid}
-                  isDisabled={disabled}
-                >
-                  <FormLabel>First name</FormLabel>
-                  <Input
-                    placeholder="John"
-                    {...register("firstName")}
-                    pattern="[\w']"
-                    {...commonInputProps}
-                  />
-                  {errors.firstName && (
-                    <FormErrorMessage>Invalid name value</FormErrorMessage>
-                  )}
-                </FormControl>
-                <FormControl isDisabled={disabled}>
-                  <FormLabel>Last name</FormLabel>
-                  <Input
-                    placeholder="Doe"
-                    {...register("lastName")}
-                    {...commonInputProps}
-                  />
-                  {errors.lastName && (
-                    <FormErrorMessage>Invalid name value</FormErrorMessage>
-                  )}
-                </FormControl>
                 <FormControl isDisabled={disabled}>
                   <FormLabel>Email</FormLabel>
                   <Input
@@ -101,35 +82,40 @@ export const SignIn = () => {
                     required={true}
                     type="email"
                     pattern="[\w-\.]+@[\w-\.]+\.[a-z]{2,4}$"
-                    {...commonInputProps}
                   />
                   {errors.email && (
                     <FormErrorMessage>Email is required</FormErrorMessage>
                   )}
                 </FormControl>
                 <FormControl isDisabled={disabled}>
-                  <FormLabel>Phone</FormLabel>
+                  <FormLabel>Password</FormLabel>
                   <InputGroup>
-                    <InputLeftAddon>+234</InputLeftAddon>
                     <Input
-                      type="tel"
-                      placeholder="phone number"
-                      {...register("phone")}
-                      {...commonInputProps}
+                      type="password"
+                      placeholder="passw"
+                      {...register("pass")}
                     />
                   </InputGroup>
                 </FormControl>
               </AlertDialogBody>
-
               <AlertDialogFooter>
                 <Button
-                  colorScheme="red"
+                  onClick={() => {
+                    navigate("/signup");
+                  }}
+                  ml={3}
+                  isDisabled={!isValid}
+                  isLoading={isLoading}
+                >
+                  No account? Create one
+                </Button>
+                <Button
                   type="submit"
                   ml={3}
                   isDisabled={!isValid}
                   isLoading={isLoading}
                 >
-                  Next
+                  Log in
                 </Button>
               </AlertDialogFooter>
             </form>

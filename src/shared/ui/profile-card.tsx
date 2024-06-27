@@ -22,16 +22,16 @@ export const ProfileCard = (): JSX.Element => {
       borderRadius={10}
     >
       <Box>
-        <Heading size="sm" textAlign="left" children={user.firstName} />
+        <Heading size="sm" textAlign="left" children={user.name} />
         <Box
           w={100}
           whiteSpace="nowrap"
           overflow="hidden"
           textOverflow="ellipsis"
-          children={user.bio || "user bio placeholder"}
+          children={user.bio}
         />
       </Box>
-      <Avatar name={user.firstName} />
+      <Avatar name={user.name} />
     </Flex>
   );
 };

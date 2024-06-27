@@ -123,6 +123,7 @@ export const CreateChatModal = ({
                     }
                     return (
                       <Checkbox
+                        key={user.id}
                         isChecked={invited.includes(user.id)}
                         onChange={(e) => {
                           toggleInvited(user.id);
