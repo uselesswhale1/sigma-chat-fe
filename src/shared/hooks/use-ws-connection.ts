@@ -35,6 +35,7 @@ SocketConnectionHookProps) => {
     }
 
     socket.connect();
+
     socket.on("connect", () => {
       console.log("connected");
 
@@ -42,6 +43,7 @@ SocketConnectionHookProps) => {
     });
     socket.on("disconnect", () => {
       console.log("disconnected");
+      socket.emit("disconnectSocket");
     });
 
     socket.on(EVENTS.CHAT, onChat);
@@ -50,11 +52,9 @@ SocketConnectionHookProps) => {
     socket.on(EVENTS.MESSAGES, onMessages);
     socket.on(EVENTS.MESSAGE, onMessage);
 
-    socket.on(EVENTS.INV_CHAT, onChatInvite);
+    socket.on(EVENTS.INVITES, onChatInvite);
 
     // socket.on(EVENTS.TYPING, onChatTyping);
-
-    socket.on("log", (res) => console.log(111, res));
 
     return () => {
       // socket.off('connect');
@@ -62,6 +62,7 @@ SocketConnectionHookProps) => {
 
       // socket.off(EVENTS.MESSAGES);
       // socket.off(EVENTS.CHATS);
+      console.log("disconn", user.id);
 
       socket.removeAllListeners();
       socket.disconnect();
@@ -74,7 +75,7 @@ SocketConnectionHookProps) => {
       socket.emit(EVENTS.MESSAGES, chatId);
     },
     createMessage: (newMessage: CreateMessageDto) => {
-      socket.emit(EVENTS.ADD_MESSAGE, JSON.stringify(newMessage));
+      socket.emit(EVENTS.MESSAGE_ADD, JSON.stringify(newMessage));
     },
     createChat: (newChat: CreateChatDto) => {
       console.log("called create-chat", newChat);
