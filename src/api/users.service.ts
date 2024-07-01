@@ -19,3 +19,9 @@ class UsersService {
 }
 
 export const usersService = new UsersService();
+
+// import { UpdateUserDto } from "../shared/types";
+// async update(updateUserDto: UpdateUserDto): Promise<User> {
+//   const { data } = await axios.get(USERS_ENDPOINT);
+//   return data;
+// }

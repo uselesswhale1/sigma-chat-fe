@@ -43,7 +43,7 @@ export const CreateChatModal = ({
     if (!users.length) {
       usersService.getUsers().then(setUsers).catch();
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const {
     register,

@@ -22,18 +22,16 @@ import { useNotifications } from "../shared/hooks";
 
 export const SignUp = () => {
   const [, setUser] = useAtom(userAtom);
-  const { register, handleSubmit, trigger, formState, getFieldState } = useForm(
-    {
-      defaultValues: {
-        email: "",
-        pass: "",
-        firstName: "",
-        lastName: "",
-      },
-    }
-  );
+  const { register, handleSubmit, formState } = useForm({
+    defaultValues: {
+      email: "",
+      pass: "",
+      firstName: "",
+      lastName: "",
+    },
+  });
 
-  const { errors, isValid, disabled } = formState;
+  const { errors, disabled } = formState;
 
   const cancelRef = useRef(null);
   const navigate = useNavigate();

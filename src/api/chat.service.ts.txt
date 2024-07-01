@@ -1,0 +1,17 @@
+// import { Chat } from "../shared/models";
+import { socket } from "./socket";
+
+// interface JoinChatDto {
+//   chat: string
+//   id: string
+// }
+
+class ChatService {
+  private socket;
+
+  constructor() {
+    this.socket = socket;
+  }
+}
+
+export const chatService = new ChatService();
