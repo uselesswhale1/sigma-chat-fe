@@ -43,9 +43,6 @@
 #     github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
 #     repository: ${{ github.repository }}
 
-env:
-  CI: false
-
 name: Node.js CI
 
 on:
@@ -103,11 +100,3 @@ jobs:
           file: ./sigma-chat-fe/Dockerfile
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sigma-chat-fe:latest
-
-      # - name: Build and push Nginx
-      #   uses: docker/build-push-action@v3
-      #   with:
-      #     context: ./nginx
-      #     file: ./nginx/Dockerfile
-      #     push: true
-      #     tags: ${{ secrets.DOCKER_HUB_USERNAME }}/sigma-chat-proxy:latest
