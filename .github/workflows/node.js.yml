@@ -31,17 +31,17 @@
 #       - name: Upload coverage to Codecov
 #         uses: codecov/codecov-action@v1
 
-      # - name: Deploy
-      #   run: |
-      #     git config --global user.name $user_name
-      #     git config --global user.email $user_email
-      #     git remote set-url origin https://${github_token}@github.com/${repository}
-      #     npm run deploy
-      #   env:
-      #     user_name: "github-actions[bot]"
-      #     user_email: "github-actions[bot]@users.noreply.github.com"
-      #     github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
-      #     repository: ${{ github.repository }}
+# - name: Deploy
+#   run: |
+#     git config --global user.name $user_name
+#     git config --global user.email $user_email
+#     git remote set-url origin https://${github_token}@github.com/${repository}
+#     npm run deploy
+#   env:
+#     user_name: "github-actions[bot]"
+#     user_email: "github-actions[bot]@users.noreply.github.com"
+#     github_token: ${{ secrets.ACTIONS_DEPLOY_ACCESS_TOKEN }}
+#     repository: ${{ github.repository }}
 
 env:
   CI: false
@@ -51,9 +51,9 @@ name: Node.js CI
 on:
   push:
     branches:
-      - 'main'
+      - "main"
   pull_request:
-    branches: [ 'main' ]
+    branches: ["main"]
 
 jobs:
   build:
@@ -61,35 +61,34 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: './sigma-chat-fe/package-lock.json'
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: "./sigma-chat-fe/package-lock.json"
 
-    - run: npm install
-      working-directory: ./sigma-chat-fe
+      - run: npm install
+        working-directory: ./sigma-chat-fe
 
-    - name: Run the tests
-      run: npm test
-      run: npm ci
+      - name: Run the tests
+        run: npm test
+      - run: npm ci
 
-    - name: Build
-      run: npm run build
+      - name: Build
+        run: npm run build
 
-    - name: Run the tests and generate coverage report
-      run: npm test -- --coverage
+      - name: Run the tests and generate coverage report
+        run: npm test -- --coverage
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1
 
-    - run: npm run start # npm run build --if-present
-      working-directory: ./sigma-chat-fe
-
+      - run: npm run start # npm run build --if-present
+        working-directory: ./sigma-chat-fe
 
   docker:
     needs: build
