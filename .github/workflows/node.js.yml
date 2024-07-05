@@ -69,7 +69,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-          cache-dependency-path: "./sigma-chat-fe/package-lock.json"
+          # cache-dependency-path: "./sigma-chat-fe/package-lock.json"
 
       - run: npm install
         working-directory: ./sigma-chat-fe
