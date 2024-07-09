@@ -51,3 +51,15 @@ export type CreateMessageDto = {
   creator: User["id"];
   chatId: Chat["id"];
 };
+
+export type SignInValues = {
+  email: string;
+  password: string;
+};
+
+export type SignUpValues = {
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+};

@@ -1,28 +1,7 @@
 import axios from "axios";
-import { ENDPOINT } from "../shared/constants/api";
+import { AUTH_ENDPOINT } from "../shared/constants/api";
 import { User } from "../shared/models";
-
-const AUTH_ENDPOINT = ENDPOINT + "/auth";
-
-export type UpdateAuthDto = {
-  name?: string;
-  bio?: string;
-  photoUrl?: string;
-  email?: string;
-  firstName?: string;
-  lastName?: string;
-};
-
-export type RegisterUserDto = {
-  email: string;
-  firstName: string;
-  lastName?: string;
-  password: string;
-};
-export type LoginUserDto = {
-  email: string;
-  password: string;
-};
+import { RegisterUserDto, LoginUserDto } from "../shared/types/api";
 
 class AuthService {
   async register(registerUserDto: RegisterUserDto): Promise<User | null> {

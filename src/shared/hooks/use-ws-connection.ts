@@ -1,36 +1,34 @@
 import { useEffect } from "react";
 import { socket } from "../../api";
-import {
-  User,
-  Chat,
-  ChatInvite,
-  CreateMessageDto,
-  CreateChatDto,
-} from "../models";
+import { User, Chat, ChatInvite } from "../models";
 import { EVENTS } from "../types";
 import { Message } from "../models";
 
 interface SocketConnectionHookProps {
   user: User | null;
+  chats: Chat[];
+  activeChatId: string | null;
   onMessages: (data: Message[]) => void;
-  onMessage: (msg: Message) => void;
   onChats: (data: Chat[]) => void;
+  onInvites: (data: ChatInvite[]) => void;
+
+  onMessage: (msg: Message) => void;
   onChat: (data: Chat) => void;
-  onChatInvite: (invite: ChatInvite[]) => void;
-  // onChatTyping: (data: string) => void;
 }
 
 export const useSocketConnection = ({
   user,
+  chats,
+  activeChatId,
   onMessages,
   onMessage,
   onChats,
+  onInvites,
   onChat,
-  onChatInvite,
-}: // onChatTyping,
-SocketConnectionHookProps) => {
+}: SocketConnectionHookProps) => {
+  const isUserExists = user && user.id;
   useEffect(() => {
-    if (!(user && user.id)) {
+    if (!isUserExists) {
       return;
     }
 
@@ -46,51 +44,39 @@ SocketConnectionHookProps) => {
       socket.emit("disconnectSocket");
     });
 
-    socket.on(EVENTS.CHAT, onChat);
     socket.on(EVENTS.CHATS, onChats);
 
     socket.on(EVENTS.MESSAGES, onMessages);
-    socket.on(EVENTS.MESSAGE, onMessage);
 
-    socket.on(EVENTS.INVITES, onChatInvite);
-
-    // socket.on(EVENTS.TYPING, onChatTyping);
+    socket.on(EVENTS.INVITES, onInvites);
 
     return () => {
-      // socket.off('connect');
-      // socket.off('disconnect');
-
-      // socket.off(EVENTS.MESSAGES);
-      // socket.off(EVENTS.CHATS);
-      console.log("disconn", user.id);
-
       socket.removeAllListeners();
       socket.disconnect();
     };
   }, [user]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return {
-    getChatMessages: (chatId: Chat["id"]) => {
-      // specific chat connection
-      socket.emit(EVENTS.MESSAGES, chatId);
-    },
-    createMessage: (newMessage: CreateMessageDto) => {
-      socket.emit(EVENTS.MESSAGE_ADD, JSON.stringify(newMessage));
-    },
-    createChat: (newChat: CreateChatDto) => {
-      console.log("called create-chat", newChat);
+  useEffect(() => {
+    if (!isUserExists) {
+      return;
+    }
 
-      socket.emit(EVENTS.ADD_CHAT, JSON.stringify(newChat));
-    },
-    deleteChat: (req: { userId: string; id: string }) => {
-      console.log("called delete-chat", req.id);
+    socket.on(EVENTS.CHAT, onChat);
 
-      socket.emit(EVENTS.DEL_CHAT, JSON.stringify(req));
-    },
-    join: (req: { userId: string; id: string }) => {
-      console.log("called join-chat", req);
+    return () => {
+      socket.off(EVENTS.CHAT);
+    };
+  }, [user, chats]); // eslint-disable-line react-hooks/exhaustive-deps
 
-      socket.emit(EVENTS.JOIN_CHAT, JSON.stringify(req));
-    },
-  };
+  useEffect(() => {
+    if (!isUserExists || !activeChatId) {
+      return;
+    }
+
+    socket.on(EVENTS.MESSAGE, onMessage);
+
+    return () => {
+      socket.off(EVENTS.MESSAGE);
+    };
+  }, [user, activeChatId]); // eslint-disable-line react-hooks/exhaustive-deps
 };

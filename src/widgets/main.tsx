@@ -2,19 +2,15 @@ import { Box } from "@chakra-ui/react";
 import { useAtom } from "jotai";
 import { Message } from "../shared/models";
 import { chatAtom } from "../shared/store";
-import { ChatInput, ChatHeader, ChatMessages } from "../shared/ui";
+import { ChatInput, Card } from "../shared/ui";
+import { ChatMessages } from "./chat-messages";
 
 interface MainProps {
   onMessage: (msg: string) => void;
   messages: Message[];
-  // typingMsg: string;
 }
 
-export const Main = ({
-  onMessage,
-  messages,
-}: // typingMsg,
-MainProps): JSX.Element => {
+export const Main = ({ onMessage, messages }: MainProps): JSX.Element => {
   const [chat] = useAtom(chatAtom);
 
   if (!chat) {
@@ -27,7 +23,12 @@ MainProps): JSX.Element => {
 
   return (
     <Box>
-      <ChatHeader chat={chat} /* typingMsg={typingMsg} */ />
+      <Card
+        name={chat.photoUrl || ""}
+        photoUrl={chat.photoUrl || ""}
+        text={chat.lastMessage}
+        header={chat.name}
+      />
 
       <ChatMessages messages={messages} />
 

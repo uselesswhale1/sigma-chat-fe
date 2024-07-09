@@ -9,12 +9,4 @@ export const enum EVENTS {
   DEL_CHAT = "removeChat",
   INVITES = "inviteChat",
   JOIN_CHAT = "joinChat",
-
-  TYPING = "typing",
-
-  // DELETE_MESSAGE = 'deleteMessage',
-
-  // CHAT_REMOVE = 'deleteChat',
-  // CHAT_ADD_USER = 'addUserToChat',
-  // CHAT_REMOVE_USER = 'removeUserFromChat',
 }
