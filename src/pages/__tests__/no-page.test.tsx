@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { NoPage } from "../noPage";
+import { NoPage } from "../no-page";
 
 describe("NoPage page should", () => {
   it("renders", () => {

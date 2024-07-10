@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavigationCreateChat should match snapshot 1`] = `
+<div>
+  <div
+    class="css-1l5xc7t"
+    data-testid="create-new-chat-test"
+  >
+    <h2
+      class="chakra-heading css-1s27s82"
+    >
+      Create new chat
+    </h2>
+  </div>
+</div>
+`;
+
+exports[`NavigationCreateChat should match snapshot with dialog 1`] = `
+<div>
+  <div
+    class="css-1l5xc7t"
+    data-testid="create-new-chat-test"
+  >
+    <h2
+      class="chakra-heading css-1s27s82"
+    >
+      Create new chat
+    </h2>
+  </div>
+</div>
+`;

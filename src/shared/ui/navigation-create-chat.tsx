@@ -28,6 +28,7 @@ export const NavigationCreateChat = ({
   return (
     <>
       <Box
+        data-testid="create-new-chat-test"
         border={"1px solid white"}
         cursor="pointer"
         onClick={handleChatModalOpen}

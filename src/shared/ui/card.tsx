@@ -4,7 +4,7 @@ import { PALLETE } from "../constants/color-pallete";
 interface CardProps {
   bg?: string;
   name: string;
-  photoUrl: string;
+  photoUrl?: string;
   header?: string;
   text: string;
   onClick?: () => void;
@@ -15,7 +15,7 @@ interface CardProps {
 export const Card = ({
   bg = PALLETE.bg,
   name,
-  photoUrl,
+  photoUrl = "",
   header,
   text,
   actions,

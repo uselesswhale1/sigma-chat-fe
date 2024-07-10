@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChatMessage should match snapshot 1`] = `
+<div>
+  <div
+    class="css-12h6285"
+  >
+    <span
+      class="chakra-avatar css-1ruhx4w"
+    >
+      <div
+        aria-label="mock-user-name"
+        class="chakra-avatar__initials css-0"
+        role="img"
+      >
+        m
+      </div>
+    </span>
+    <div
+      class="css-g6e4dm"
+    >
+      <h2
+        class="chakra-heading css-tz0gqg"
+      >
+        mock-user-name
+      </h2>
+      <div
+        class="css-3mdty7"
+      >
+        content
+      </div>
+      <h6
+        class="chakra-heading css-tz0gqg"
+      >
+        11:10:04 PM
+      </h6>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ChatMessage should match snapshot when not own message 1`] = `
+<div>
+  <div
+    class="css-fndydb"
+  >
+    <span
+      class="chakra-avatar css-1ruhx4w"
+    >
+      <div
+        aria-label="mock-user-name"
+        class="chakra-avatar__initials css-0"
+        role="img"
+      >
+        m
+      </div>
+    </span>
+    <div
+      class="css-ze3jos"
+    >
+      <h2
+        class="chakra-heading css-zfn86r"
+      >
+        mock-user-name
+      </h2>
+      <div
+        class="css-3mdty7"
+      >
+        content
+      </div>
+      <h6
+        class="chakra-heading css-tz0gqg"
+      >
+        11:10:04 PM
+      </h6>
+    </div>
+  </div>
+</div>
+`;

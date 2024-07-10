@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ChatInput should match snapshot 1`] = `
+<div>
+  <div
+    class="css-ys80mx"
+    data-testid="chat-test-wrapper"
+  >
+    <div
+      class="chakra-input__group css-bx0blc"
+      data-group="true"
+    >
+      <input
+        class="chakra-input css-1n0hj84"
+        data-testid="chat-test-input"
+        placeholder="Enter message"
+        value="123-321"
+      />
+      <div
+        class="chakra-input__right-element css-vcnsx7"
+      >
+        <button
+          class="chakra-button css-151vs4d"
+          data-testid="chat-enter-button"
+          type="button"
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+`;

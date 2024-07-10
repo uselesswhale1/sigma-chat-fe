@@ -26,6 +26,7 @@ export const ChatInput = ({
 
   return (
     <Box
+      data-testid="chat-test-wrapper"
       p={2}
       bg={PALLETE.bg}
       color={PALLETE.text}
@@ -41,6 +42,7 @@ export const ChatInput = ({
     >
       <InputGroup size="md">
         <Input
+          data-testid="chat-test-input"
           pr="4.5rem"
           placeholder="Enter message"
           value={message}
@@ -48,6 +50,7 @@ export const ChatInput = ({
         />
         <InputRightElement width="4.5rem">
           <Button
+            data-testid="chat-enter-button"
             h="1.75rem"
             size="sm"
             onClick={onApply}

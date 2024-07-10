@@ -1,0 +1,155 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavigationCard should match snapshot 1`] = `
+<div>
+  <div
+    class="css-vba8fw"
+  >
+    <div
+      class="css-0"
+    >
+      <span
+        class="chakra-avatar css-1ruhx4w"
+      >
+        <div
+          aria-label="test-mock-name"
+          class="chakra-avatar__initials css-0"
+          role="img"
+        >
+          t
+        </div>
+      </span>
+    </div>
+    <div
+      class="css-0"
+    >
+      <h2
+        class="chakra-heading css-13brihr"
+      >
+        test-mock-name
+      </h2>
+      <div
+        class="css-1a1loib"
+      >
+        test-mock-lastMessage
+      </div>
+    </div>
+    <div
+      class="css-0"
+    >
+      <button
+        aria-controls="menu-list-:r1:"
+        aria-expanded="false"
+        aria-haspopup="menu"
+        aria-label="Options"
+        class="chakra-button chakra-menu__menu-button css-p7mkev"
+        id="menu-button-:r1:"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="chakra-icon css-onkibi"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <div
+        class="css-0"
+        style="visibility: hidden; position: absolute; min-width: max-content; inset: 0 auto auto 0;"
+      >
+        <div
+          aria-orientation="vertical"
+          class="chakra-menu__menu-list css-sjt5nk"
+          hidden=""
+          id="menu-list-:r1:"
+          role="menu"
+          style="transform-origin: var(--popper-transform-origin); opacity: 0; visibility: hidden; transform: scale(0.8) translateZ(0);"
+          tabindex="-1"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`NavigationCard should match snapshot for selected 1`] = `
+<div>
+  <div
+    class="css-514p4k"
+  >
+    <div
+      class="css-0"
+    >
+      <span
+        class="chakra-avatar css-1ruhx4w"
+      >
+        <div
+          aria-label="test-mock-name"
+          class="chakra-avatar__initials css-0"
+          role="img"
+        >
+          t
+        </div>
+      </span>
+    </div>
+    <div
+      class="css-0"
+    >
+      <h2
+        class="chakra-heading css-13brihr"
+      >
+        test-mock-name
+      </h2>
+      <div
+        class="css-1a1loib"
+      >
+        test-mock-lastMessage
+      </div>
+    </div>
+    <div
+      class="css-0"
+    >
+      <button
+        aria-controls="menu-list-:r3:"
+        aria-expanded="false"
+        aria-haspopup="menu"
+        aria-label="Options"
+        class="chakra-button chakra-menu__menu-button css-p7mkev"
+        id="menu-button-:r3:"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="chakra-icon css-onkibi"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M 3 5 A 1.0001 1.0001 0 1 0 3 7 L 21 7 A 1.0001 1.0001 0 1 0 21 5 L 3 5 z M 3 11 A 1.0001 1.0001 0 1 0 3 13 L 21 13 A 1.0001 1.0001 0 1 0 21 11 L 3 11 z M 3 17 A 1.0001 1.0001 0 1 0 3 19 L 21 19 A 1.0001 1.0001 0 1 0 21 17 L 3 17 z"
+            fill="currentColor"
+          />
+        </svg>
+      </button>
+      <div
+        class="css-0"
+        style="visibility: hidden; position: absolute; min-width: max-content; inset: 0 auto auto 0;"
+      >
+        <div
+          aria-orientation="vertical"
+          class="chakra-menu__menu-list css-sjt5nk"
+          hidden=""
+          id="menu-list-:r3:"
+          role="menu"
+          style="transform-origin: var(--popper-transform-origin); opacity: 0; visibility: hidden; transform: scale(0.8) translateZ(0);"
+          tabindex="-1"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

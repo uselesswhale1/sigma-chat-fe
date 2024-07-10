@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card should match snapshot 1`] = `
+<div>
+  <div
+    class="css-1utkaw9"
+  >
+    <div
+      class="css-0"
+    >
+      <span
+        class="chakra-avatar css-1ruhx4w"
+      >
+        <div
+          aria-label="name"
+          class="chakra-avatar__initials css-0"
+          role="img"
+        >
+          n
+        </div>
+      </span>
+    </div>
+    <div
+      class="css-0"
+    >
+      <h2
+        class="chakra-heading css-13brihr"
+      >
+        header
+      </h2>
+      <div
+        class="css-1a1loib"
+      >
+        message
+      </div>
+    </div>
+    <div
+      class="css-0"
+    />
+  </div>
+</div>
+`;
+
+exports[`Card should match snapshot when reversed 1`] = `
+<div>
+  <div
+    class="css-1a6f4eo"
+  >
+    <div
+      class="css-0"
+    >
+      <span
+        class="chakra-avatar css-1ruhx4w"
+      >
+        <div
+          aria-label="name"
+          class="chakra-avatar__initials css-0"
+          role="img"
+        >
+          n
+        </div>
+      </span>
+    </div>
+    <div
+      class="css-0"
+    >
+      <h2
+        class="chakra-heading css-13brihr"
+      >
+        header
+      </h2>
+      <div
+        class="css-1a1loib"
+      >
+        message
+      </div>
+    </div>
+    <div
+      class="css-0"
+    />
+  </div>
+</div>
+`;
