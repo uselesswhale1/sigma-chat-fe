@@ -28,8 +28,8 @@ export const ChatInput = ({
     <Box
       data-testid="chat-test-wrapper"
       p={2}
-      bg={PALLETE.h}
-      color={PALLETE.b}
+      bg={PALLETE.g}
+      color={PALLETE.a}
       bottom={0}
       left={0}
       right={0}
@@ -54,7 +54,7 @@ export const ChatInput = ({
             h="1.75rem"
             size="sm"
             onClick={onApply}
-            bg={PALLETE.b}
+            bg={PALLETE.a}
             children="Send"
           />
         </InputRightElement>

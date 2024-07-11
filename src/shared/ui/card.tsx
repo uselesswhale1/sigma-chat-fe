@@ -15,7 +15,7 @@ interface CardProps {
 }
 
 export const Card = ({
-  bg = PALLETE.d,
+  bg = PALLETE.c,
   name,
   photoUrl = "",
   header,
@@ -48,7 +48,7 @@ export const Card = ({
           whiteSpace="nowrap"
           overflow="hidden"
           textOverflow="ellipsis"
-          color={PALLETE.b}
+          color={PALLETE.a}
           children={text}
         />
       </Box>

@@ -138,7 +138,7 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <Box className="App" bg={PALLETE.j} h={"100vh"}>
+    <Box className="App" bg={PALLETE.i} h={"100vh"}>
       <Grid
         templateAreas={`
           "header header"
@@ -150,7 +150,7 @@ const App = (): JSX.Element => {
         color="blackAlpha.700"
         fontWeight="bold"
       >
-        <GridItem pl="2" bg={PALLETE.h} area={"header"}>
+        <GridItem pl="2" bg={PALLETE.g} area={"header"}>
           <Header onUserReset={handleUserReset} />
         </GridItem>
         <GridItem bg={PALLETE.i} area={"nav"}>
@@ -160,7 +160,7 @@ const App = (): JSX.Element => {
             onChatChange={handleChatChange}
           />
         </GridItem>
-        <GridItem pl="2" bg={PALLETE.j} area={"main"}>
+        <GridItem pl="2" bg={PALLETE.i} area={"main"}>
           <Main onMessage={sendMessage} messages={messages} />
         </GridItem>
       </Grid>

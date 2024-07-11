@@ -5,13 +5,16 @@ import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { NoPage, SignIn, SignUp } from "./pages";
+import { theme } from "./shared/constants/theme";
+
+import "@fontsource/ubuntu";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route index element={<App />} />

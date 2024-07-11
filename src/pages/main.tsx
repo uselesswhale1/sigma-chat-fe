@@ -24,13 +24,13 @@ export const Main = ({ onMessage, messages }: MainProps): JSX.Element => {
 
   return (
     <Box>
-      <Box bgColor={PALLETE.h}>
+      <Box bgColor={PALLETE.g}>
         <Card
           name={chat.photoUrl || ""}
           photoUrl={chat.photoUrl || ""}
           text={chat.lastMessage}
           header={chat.name}
-          bg={PALLETE.h}
+          bg={PALLETE.g}
         />
       </Box>
 

@@ -17,7 +17,7 @@ export const ChatMessage = ({
     .split(", ")[1];
 
   const messageDirectionStyle = isOwnMessage ? "row-reverse" : "initial";
-  const messageBgStyle = isOwnMessage ? PALLETE.d : PALLETE.f;
+  const messageBgStyle = isOwnMessage ? PALLETE.c : PALLETE.e;
 
   return (
     <Flex

@@ -55,9 +55,8 @@ export const Header = ({ onUserReset }: HeaderProps): JSX.Element => {
           aria-label="Options"
           children={
             <Card
-              bg={PALLETE.f}
+              bg={PALLETE.g}
               name={user.name}
-              // m={1}
               p={1}
               photoUrl={user.photoUrl || ""}
               text={user.bio || ""}

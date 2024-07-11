@@ -29,7 +29,7 @@ export const NavigationInvite = ({
     <NavigationCard
       name={name}
       id={name}
-      isSelected={false}
+      isSelected
       onSelect={() => {}}
       lastMessage=""
       actions={actions}
