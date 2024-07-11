@@ -3,7 +3,8 @@ import { useAtom } from "jotai";
 import { Message } from "../shared/models";
 import { chatAtom } from "../shared/store";
 import { ChatInput, Card } from "../shared/ui";
-import { ChatMessages } from "./chat-messages";
+import { ChatMessages } from "../widgets/chat-messages";
+import { PALLETE } from "../shared/constants";
 
 interface MainProps {
   onMessage: (msg: string) => void;
@@ -23,12 +24,15 @@ export const Main = ({ onMessage, messages }: MainProps): JSX.Element => {
 
   return (
     <Box>
-      <Card
-        name={chat.photoUrl || ""}
-        photoUrl={chat.photoUrl || ""}
-        text={chat.lastMessage}
-        header={chat.name}
-      />
+      <Box bgColor={PALLETE.h}>
+        <Card
+          name={chat.photoUrl || ""}
+          photoUrl={chat.photoUrl || ""}
+          text={chat.lastMessage}
+          header={chat.name}
+          bg={PALLETE.h}
+        />
+      </Box>
 
       <ChatMessages messages={messages} />
 

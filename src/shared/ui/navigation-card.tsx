@@ -36,8 +36,9 @@ export const NavigationCard = ({
     <Card
       name={name}
       photoUrl=""
+      m={1}
       text={lastMessage}
-      bg={isSelected ? PALLETE.b : PALLETE.a}
+      bg={isSelected ? PALLETE.d : PALLETE.g}
       header={name}
       onClick={() => onSelect(id)}
       actions={

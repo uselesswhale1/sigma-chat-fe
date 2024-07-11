@@ -1,23 +1,25 @@
+import { Socket } from "socket.io-client";
 import { Chat, CreateChatDto, CreateMessageDto, User } from "../shared/models";
 import { EVENTS } from "../shared/types";
-import { socket } from "./socket";
+import { socket as Sockett } from "./socket";
 
 class ChatService {
+  constructor(private socket: Socket) {}
   getChatMessages(chatId: Chat["id"]) {
-    socket.emit(EVENTS.MESSAGES, chatId);
+    this.socket.emit(EVENTS.MESSAGES, chatId);
   }
   createMessage(newMessage: CreateMessageDto) {
-    socket.emit(EVENTS.MESSAGE_ADD, JSON.stringify(newMessage));
+    this.socket.emit(EVENTS.MESSAGE_ADD, JSON.stringify(newMessage));
   }
   createChat(newChat: CreateChatDto) {
-    socket.emit(EVENTS.ADD_CHAT, JSON.stringify(newChat));
+    this.socket.emit(EVENTS.ADD_CHAT, JSON.stringify(newChat));
   }
   deleteChat(req: { userId: string; id: string }) {
-    socket.emit(EVENTS.DEL_CHAT, JSON.stringify(req));
+    this.socket.emit(EVENTS.DEL_CHAT, JSON.stringify(req));
   }
   join(id: string) {
-    socket.emit(EVENTS.JOIN_CHAT, id);
+    this.socket.emit(EVENTS.JOIN_CHAT, id);
   }
 }
 
-export const chatService = new ChatService();
+export const chatService = new ChatService(Sockett);

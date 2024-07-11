@@ -1,4 +1,5 @@
 import {
+  Box,
   Flex,
   Menu,
   MenuButton,
@@ -54,8 +55,10 @@ export const Header = ({ onUserReset }: HeaderProps): JSX.Element => {
           aria-label="Options"
           children={
             <Card
-              bg={PALLETE.a}
+              bg={PALLETE.f}
               name={user.name}
+              // m={1}
+              p={1}
               photoUrl={user.photoUrl || ""}
               text={user.bio || ""}
               header={user.name}

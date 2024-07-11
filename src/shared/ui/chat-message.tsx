@@ -17,7 +17,7 @@ export const ChatMessage = ({
     .split(", ")[1];
 
   const messageDirectionStyle = isOwnMessage ? "row-reverse" : "initial";
-  const messageBgStyle = isOwnMessage ? PALLETE.a : PALLETE.b;
+  const messageBgStyle = isOwnMessage ? PALLETE.d : PALLETE.f;
 
   return (
     <Flex
@@ -38,7 +38,9 @@ export const ChatMessage = ({
           children={message.creator.name}
         />
 
-        <Box w={360}>{message.content}</Box>
+        <Box w={360} color={PALLETE.a}>
+          {message.content}
+        </Box>
 
         <Heading
           as="h6"

@@ -7,25 +7,29 @@ interface CardProps {
   photoUrl?: string;
   header?: string;
   text: string;
+  m?: number;
+  p?: number;
   onClick?: () => void;
   actions?: JSX.Element;
   isReversed?: boolean;
 }
 
 export const Card = ({
-  bg = PALLETE.bg,
+  bg = PALLETE.d,
   name,
   photoUrl = "",
   header,
   text,
+  m = 0,
+  p = 2,
   actions,
   isReversed,
   onClick,
 }: CardProps): JSX.Element => {
   return (
     <Flex
-      p={2}
-      m={1}
+      p={p}
+      m={m}
       bgColor={bg}
       gap="4"
       alignItems="center"
@@ -44,6 +48,7 @@ export const Card = ({
           whiteSpace="nowrap"
           overflow="hidden"
           textOverflow="ellipsis"
+          color={PALLETE.b}
           children={text}
         />
       </Box>

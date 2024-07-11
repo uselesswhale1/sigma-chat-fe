@@ -37,7 +37,7 @@ export const NavigationCreateChat = ({
         py={5}
         borderRadius="10px"
       >
-        <Heading size="xs" color={PALLETE.text} children="Create new chat" />
+        <Heading size="xs" color={PALLETE.b} children="Create new chat" />
       </Box>
 
       {isOpen && (

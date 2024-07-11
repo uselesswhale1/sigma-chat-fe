@@ -4,14 +4,14 @@ type Entity = {
   photoUrl?: string;
 };
 
-type Logs = {
+type ActionDates = {
   createdAt: string;
   updatedAt?: string;
   deletedAt?: string;
 };
 
 export type User = Entity &
-  Logs & {
+  ActionDates & {
     firstName: string;
     lastName?: string;
     lastActive?: string;
@@ -21,7 +21,7 @@ export type User = Entity &
   };
 
 export type Chat = Entity &
-  Logs & {
+  ActionDates & {
     lastMessage: string;
     creator: Entity;
   };
@@ -31,7 +31,7 @@ export type ChatInvite = {
   name: string;
 };
 
-export type Message = Logs & {
+export type Message = ActionDates & {
   content: string;
   creator: User;
   chatId: string;

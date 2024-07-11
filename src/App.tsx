@@ -138,29 +138,29 @@ const App = (): JSX.Element => {
   }
 
   return (
-    <Box className="App" bg={PALLETE.a} h={"100vh"}>
+    <Box className="App" bg={PALLETE.j} h={"100vh"}>
       <Grid
         templateAreas={`
           "header header"
           "nav main"
           `}
-        gridTemplateRows={"60px 1fr "}
+        gridTemplateRows={"56px 1fr "}
         gridTemplateColumns={"360px 1fr"}
         gap="2"
         color="blackAlpha.700"
         fontWeight="bold"
       >
-        <GridItem pl="2" bg={PALLETE.a} area={"header"}>
+        <GridItem pl="2" bg={PALLETE.h} area={"header"}>
           <Header onUserReset={handleUserReset} />
         </GridItem>
-        <GridItem bg={PALLETE.bg} area={"nav"}>
+        <GridItem bg={PALLETE.i} area={"nav"}>
           <Navigation
             chats={chats}
             invites={invites}
             onChatChange={handleChatChange}
           />
         </GridItem>
-        <GridItem pl="2" bg={PALLETE.bg} area={"main"}>
+        <GridItem pl="2" bg={PALLETE.j} area={"main"}>
           <Main onMessage={sendMessage} messages={messages} />
         </GridItem>
       </Grid>

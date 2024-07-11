@@ -77,7 +77,7 @@ export const Navigation = ({
         />
       ))}
 
-      <Box bgColor={PALLETE.b} pb={1} hidden={!invites.length}>
+      <Box bgColor={PALLETE.h} pb={1} hidden={!invites.length}>
         <Heading size="sm" px={2} children="Invites:" />
 
         {invites.map(({ id, name }) => (
